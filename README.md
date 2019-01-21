@@ -27,4 +27,4 @@ When you have completed the configuration process:
 ## Known Issues
 
 1. The PDF version of the report does not include the first chart in the Overall Account Health - Compliant And Non-Compliant Accounts. Workaround: open the HTML report and manually print from the browser.
-2.
+2. The path for the Chrome browser executable should be auto-discovered but this does not always work depending on the type of Chrome installation.
