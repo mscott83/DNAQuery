@@ -964,11 +964,41 @@ if($SSHKeysFound -gt 0){
 
     ### Top 10 oldest SSH keys ###
 
-    $OldestSSHKeyListQuery = 'SELECT "Source Machine","Source Account","Target Machine","Target Account","Key Age (at least)" FROM SSHKeysScan WHERE "Key AGe (at least)"!="N/A" ORDER BY "Key Age (at least)" DESC LIMIT 10'
+    $OldestSSHKeyListQuery = 'SELECT "Source Machine","Source Account","Target Machine","Target Account","Key Age (at least)" FROM SSHKeysScan WHERE "Key Age (at least)"!="N/A" ORDER BY "Key Age (at least)" DESC LIMIT 10'
     $result = Get-SQLite -Query $OldestSSHKeyListQuery -File $sqldb
     $OldestSSHKeyList = $result.tables[0] | Select-Object * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors | ConvertTo-HTML -fragment
 
     (Get-Content $exportHTML) -replace "<insert>Oldest SSH Key List</insert>", $OldestSSHKeyList | Set-Content $exportHTML
+
+    ### Check for existence of Orphan Keys ###
+
+    $OrphanSSHKeysQuery = 'SELECT COUNT(*) FROM SSHKeysScan WHERE "Orphan SSH Key?"="Orphan Private SSH Key"'
+    $result = Get-SQLite -Query $OrphanSSHKeysQuery -File $sqldb
+    $OrphanSSHKeysFound = $result.tables.rows[0]
+
+    if($OrphanSSHKeysFound -gt 0){
+
+      $OrphanSSHKeysSection = Get-Content '.\DNAReport\sections\ssh_keys\02_ssh-orphan-keys.html'
+      (Get-Content $exportHTML) -replace "<!-- SSH Orphan Private Keys -->", $OrphanSSHKeysSection | Set-Content $exportHTML
+
+      ### Oldest Orphan SSH private key ###
+
+      $OldestOrphanSSHKeyQuery = 'SELECT "Key Age (at least)" FROM SSHKeysScan WHERE "Key Age (at least)"!="N/A" AND "Orphan SSH Key?"="Orphan Private SSH Key" ORDER BY "Key Age (at least)" DESC LIMIT 1'
+      $result = Get-SQLite -Query $OldestOrphanSSHKeyQuery -File $sqldb
+      $OldestOrphanSSHKey = $result.tables.rows[0]
+
+      (Get-Content $exportHTML) -replace "<insert>Oldest Orphan SSH Private Key</insert>", $OldestOrphanSSHKey | Set-Content $exportHTML
+
+      ### Top 10 Orphan SSH Private Keys ###
+
+      $OrphanSSHPrivateKeys = 'SELECT "Source Machine","Source Account","Key Algorithm","Passphrase Encryption","Key Age (at least)" FROM SSHKeysScan WHERE "Orphan SSH Key?"="Orphan Private SSH Key" ORDER BY "Key Age (at least)" DESC LIMIT 10'
+      $result = Get-SQLite -Query $OrphanSSHPrivateKeys -File $sqldb
+      $OrphanSSHKeyList = $result.tables[0] | Select-Object * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors | ConvertTo-HTML -fragment
+
+      (Get-Content $exportHTML) -replace "<insert>Orphan SSH Private Key List</insert>", $OrphanSSHKeyList | Set-Content $exportHTML
+
+    }
+
 
 
 }
