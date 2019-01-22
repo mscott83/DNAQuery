@@ -1,3 +1,10 @@
 dnaquery.db
 env.ps1
 DNAReport/index.html
+working/cloudusers/*
+working/database/*
+working/domain/*
+working/hardcoded/*
+working/sshkeys/*
+working/unix/*
+working/windows/*
