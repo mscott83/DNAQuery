@@ -1122,9 +1122,15 @@ write-host "Cleaning up..."
 
 ### Output finished report file as PDF ###
 
-$ChromePath = $env:LOCALAPPDATA
+$ChromePath = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 
-$Command = "$ChromePath\Google\Chrome\Application\chrome.exe"
+if(Test-Path $ChromePath){
+  $Command = $ChromePath
+}
+else{
+  $ProfilePath = $env:LOCALAPPDATA
+  $Command = "$ProfilePath\Google\Chrome\Application\chrome.exe"
+}
 
 & $Command --headless --print-to-pdf="$ExportFolder\DNA Executive Report - $CustomerName.pdf" "file:///$OutputLocation/DNAReport/index.html"
 
