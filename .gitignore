@@ -1,4 +1,4 @@
-dnaquery.db
+#dnaquery.db
 env.ps1
 DNAReport/index.html
 working/cloudinstances/*.csv
