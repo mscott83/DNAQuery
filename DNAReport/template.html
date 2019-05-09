@@ -10,22 +10,22 @@
 
     <title>CyberArk DNA Executive Report - <insert>Customer Name</insert></title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles for this template -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dnareport.min.css" rel="stylesheet">
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    <!-- Custom styles for this template -->
-    <link href="css/resume.min.css" rel="stylesheet">
-    <!-- <link href="css/mdb.min.css" rel="stylesheet"> -->
+    <!-- Styles for printing this template to PDF -->
     <style>
       @media print {
         @page { margin: 0; }
         body { margin: 1.6cm; }
-      }    
+      }
     </style>
 
     <!-- Google Charts JS -->
@@ -36,10 +36,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none">CyberArk DNA Executive Report</span>
-        <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/cyberark-logo.jpg" alt="">
-        </span>
+         <img src="img/logo_white.png" width="220" height="44" alt=""/>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -78,13 +75,13 @@
 
       <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
         <div class="my-auto">
-          <h1 class="mb-0">CyberArk
-            <span class="text-primary">DNA Executive Report</span>
+          <img src="img/horizontal-logo_400_80px.png" class="mb-5" alt="">
+          <h1 class="mb-0">DNA Executive Report
           </h1>
-          <div class="subheading mb-5">Prepared on behalf of <span class="text-primary"><insert>Customer Name</insert></span> by
-            <a href="mailto:<insert>Author Email</insert>"><insert>Author Email</insert></a>
+          <div class="subheading mb-5">Prepared on behalf of <span class="title-primary"><insert>Customer Name</insert></span> by
+            <a class="title-primary" href="mailto:<insert>Author Email</insert>"><insert>Author Email</insert></a>
           </div>
-          <p class="lead mb-5">Privileged accounts and credentials represent one of the largest security vulnerabilities an organisation faces today. In the hands of an external attacker or malicious insider, privileged accounts allow attackers to take full control of an organisation’s IT infrastructure, disable security controls, steal confidential information, commit financial fraud and disrupt operations. With this growing threat, organizations need to gain visibility into the accounts that enable attackers to be successful. CyberArk Discovery and Audit (DNA) provides a tool that enables organizations to gain insight into the breadth of their attack surface, risk of credential theft, and overall privileged account security health.</p>
+          <p class="lead mb-5">Privileged accounts and credentials represent one of the largest security vulnerabilities an organization faces today. In the hands of an external attacker or malicious insider, privileged accounts allow attackers to take full control of an organization's IT infrastructure, disable security controls, steal confidential information, commit financial fraud and disrupt operations. With this growing threat, organizations need to gain visibility into the accounts that enable attackers to be successful. CyberArk Discovery and Audit (DNA) provides a tool that enables organizations to gain insight into the breadth of their attack surface, risk of credential theft, and overall privileged account security health.</p>
           <div class="social-icons">
             <a href="https://cyberark.com/">
               <i class="fab fa fa-globe"></i>
@@ -104,7 +101,7 @@
 
       <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="overview">
         <div class="my-auto">
-          <h2 class="mb-5"><img class="img-fluid" src="img/cyberark-logo.jpg" height=125 width=125 alt="">&nbsp;&nbsp;Overview</h2>
+          <h2 class="mb-5">Overview</h2>
           <div class="resume-item d-flex flex-column flex-md-row mb-5">
             <div class="resume-content mr-auto">
               <p>The following represents a high-level recap of the findings of the DNA scan, as contained in the results files provided by <insert>Customer Name</insert>. It is important to note that the results within this report only pertain to the machines that the DNA tool was able to connect to on the day of the scan. It cannot connect to machines which are powered off, disconnected from the network, or were otherwise unavailable to the tool. Therefore these results should be regarded only as a representative sample of the environment rather than a complete health check.</p>
@@ -112,11 +109,11 @@
           </div>
           <div class="resume-item d-flex flex-column flex-md-row mb-5">
             <div class="resume-content mr-auto">
-              <h3 class="mb-0">Devices</h3>              
+              <h3 class="mb-0">Devices</h3>
               <div class="subheading text-primary mb-3"><span class="text-primary">Windows and Unix</span></div>
               <p>CyberArk DNA has the ability to scan several types of devices in order to ascertain the number of accounts, both privileged and non-privileged, which exist within them as well as detailed information about the state of these accounts. From the scan results provided, the following machine types were scanned by DNA.</p>
               <div class="resume-content mr-5 ml-5">
-                <insert>Overview Table 1</insert>              
+                <insert>Windows and Unix Overview Table 1</insert>
               </div>
             </div>
           </div>
@@ -125,9 +122,9 @@
             <div class="resume-content mr-auto">
               <h3 class="mb-0">Accounts</h3>
               <div class="subheading text-primary mb-3"><span class="text-primary">Privileged and Non-privileged</span></div>
-              <p>Having scanned devices, DNA is able to detect and analyse several types of accounts for potential risks related to privilege. Both privileged and non-privileged accounts are included within the scan results because it is not uncommon for non-privileged accounts to be used during the attack chain, particularly for reconnaissance purposes.</p>
+              <p>Having scanned devices, DNA is able to detect and analyze several types of accounts for potential risks related to privilege. Both privileged and non-privileged accounts are included within the scan results because it is not uncommon for non-privileged accounts to be used during the attack chain, particularly for reconnaissance purposes.</p>
               <div class="resume-content mr-5 ml-5">
-                <insert>Overview Table 2</insert>              
+                <insert>Privileged and Non-privileged Overview Table 2</insert>
               </div>
             </div>
           </div>
@@ -138,10 +135,10 @@
           <div class="resume-item d-flex flex-column flex-md-row mb-5">
             <div class="resume-content mr-auto">
               <h3 class="mb-0" >Hardcoded Credentials</h3>
-              <div class="subheading text-primary mb-3"><span class="text-primary">IIS, WebSphere and WebLogic Application Accounts with Plaintext Passwords</span></div>
-              <p>Hardcoded credentials are particularly important because they offer an attacker an easy way to escalate privilege. Obtaining a plaintext password from an application file means that the attacker does not have to waste time and effort cracking encrypted credentials, or risk detection by attempting a brute-force attack.</p>
+              <div class="subheading text-primary mb-3"><span class="text-primary">IIS, WebSphere and WebLogic Application Accounts with Plain-text Passwords</span></div>
+              <p>Hard-coded credentials are particularly important because they offer an attacker an easy way to escalate privilege. Obtaining a plain-text password from an application file means that the attacker does not have to waste time and effort cracking encrypted credentials, or risk detection by attempting a brute-force attack.</p>
               <div class="resume-content mr-5 ml-5">
-                <insert>Overview Table 3</insert>              
+                <insert>Hardcoded Credentials Overview Table 3</insert>
               </div>
             </div>
           </div>
@@ -153,7 +150,6 @@
               <p>Account health can be measured in terms of the age of individual passwords within the environment. Generally speaking, the older a password is the more likely it is to be stolen, and the larger the window of opportunity is for exploiting that credential. Particularly with privileged accounts it is important to implement a rotation policy that ensures that passwords are changed regularly.</p>
               <div class="resume-content mx-auto col-md-8">
                 <!-- <div class="overview-chart-4"></div> -->
-    
                 <script type="text/javascript">
                   google.charts.load('current', {'packages':['bar']});
                   google.charts.setOnLoadCallback(drawChart);
@@ -166,10 +162,24 @@
                     ]);
 
                     var options = {
-                      chart: {
-                        title: 'Operating System Password Compliance', 
-                        titleTextStyle: {color: 'red', fontName: 'Segoe UI Light', fontSize: '36' }
-                      }
+
+                        title: 'Operating System Password Compliance',
+                        titleTextStyle: {fontName: 'Ropa Sans', fontSize: '18' },
+                        legend: {textStyle: {
+                                            fontName: 'Ropa Sans',
+                                            fontSize: '12'
+                                            }
+                                },
+                        hAxis: {title: 'OS Type',
+                                textStyle:{
+                                  fontName: 'Ropa Sans'
+                                }
+                              },
+                        vAxis: {title: 'Accounts',
+                                textStyle:{
+                                  fontName: 'Ropa Sans'
+                                }
+                              }
                     };
 
                     var chart_div = document.getElementById('overview-chart-4');
@@ -212,21 +222,21 @@
           <div class="resume-item d-flex flex-column flex-md-row mb-5">
               <div class="resume-content mr-auto">
                 <p><img class="img-fluid" src="img/cyberark-logo.jpg" height=125 width=125 alt="">&nbsp;&nbsp;</p>
-                <p>CyberArk and the CyberArk logo are registered trademarks of CyberArk Software in the U.S. and other countries. ©Copyright 2018 CyberArk Software.  All rights reserved.  Published in the U.S., 6.16.</p>
+                <p>CyberArk and the CyberArk logo are registered trademarks of CyberArk Software in the U.S. and other countries. ©Copyright 2019 CyberArk Software.  All rights reserved.  Published in the U.S., 6.16.</p>
                 <p>CyberArk believes the information in this document is accurate as of its publication date. The information is provided without any express, statutory, or implied warranties and is subject to change without notice.</p>
                 <p>This document contains information and ideas, which are proprietary to CyberArk Software Ltd.</p>
                 <p>No part of this publication may be reproduced, stored in a retrieval system, or transmitted, in any form or by any means, electronic, mechanical, photocopying, recording, scanning or otherwise, without the prior written permission of CyberArk Software Ltd.</p>
               </div>
-          </div>  
+          </div>
       </section>
     </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
     <script src="js/resume.min.js"></script>
