@@ -423,7 +423,7 @@ $UnixCompliantQuery = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM UnixSca
 $result = Get-SQLite -Query $UnixCompliantQuery -File $sqldb
 $UnixCompliant = $result.tables.rows[0]
 
-$UnixCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE ("Account Category"="Privileged Local") AND ("Compliance Status" LIKE "Compliant%")) a'
+$UnixCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE ("Account Category"="Privileged Local") AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")) a'
 $result = Get-SQLite -Query $UnixCompliantQuery2 -File $sqldb
 $UnixCompliant += $result.tables.rows[0]
 
