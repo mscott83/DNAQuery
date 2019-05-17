@@ -266,60 +266,60 @@ $OverView1 | Add-Member -NotePropertyName "Total" -NotePropertyValue $TotalMachi
 
 $OverViewTable1 = $OverView1 | ConvertTo-Html -Fragment -As List
 
-(Get-Content $exportHTML) -replace "<insert>Overview Table 1</insert>", $OverviewTable1 | Set-Content $exportHTML
+(Get-Content $exportHTML) -replace "<insert>Windows and Unix Overview Table 1</insert>", $OverviewTable1 | Set-Content $exportHTML
 
 ### Number of Different Account Types Scanned ###
 
-$sql.CommandText = 'SELECT COUNT(DISTINCT "Account Name") FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account")'
+$sql.CommandText = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account")'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $WindowsPrivAccounts = $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account")) a'
+$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT(LOWER("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account")) a'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $WindowsPrivAccounts += $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(DISTINCT "Account Name") FROM WindowsScan WHERE "Account Category" LIKE "Non-Privileged%" AND "Account Type" LIKE "Domain%"'
+$sql.CommandText = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM WindowsScan WHERE "Account Category" LIKE "Non-Privileged%" AND "Account Type" LIKE "Domain%"'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $WindowsNonPrivAccounts = $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND "Account Category" LIKE "Non-Privileged%") a'
+$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT(LOWER("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND "Account Category" LIKE "Non-Privileged%") a'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $WindowsNonPrivAccounts += $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(DISTINCT "Account Name") FROM UnixScan WHERE "Account Category"="Privileged Domain"'
+$sql.CommandText = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM UnixScan WHERE "Account Category"="Privileged Domain"'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $UnixPrivAccounts = $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT ("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE "Account Category"="Privileged Local") a'
+$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE "Account Category"="Privileged Local") a'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $UnixPrivAccounts += $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(DISTINCT "Account Name") FROM UnixScan WHERE "Account Category"="Non-Privileged Domain"'
+$sql.CommandText = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM UnixScan WHERE "Account Category"="Non-Privileged Domain"'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
 
 $UnixNonPrivAccounts = $data.tables.rows[0]
 
-$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT ("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE "Account Category"="Non-Privileged Local") a'
+$sql.CommandText = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE "Account Category"="Non-Privileged Local") a'
 $adapter = New-Object -TypeName System.Data.SQLite.SQLiteDataAdapter $sql
 $data = New-Object System.Data.DataSet
 [void]$adapter.Fill($data)
@@ -337,7 +337,7 @@ $OverView2 | Add-Member -NotePropertyName "Total Accounts" -NotePropertyValue $T
 
 $OverViewTable2 = $OverView2 | ConvertTo-Html -Fragment -As List
 
-(Get-Content $exportHTML) -replace "<insert>Overview Table 2</insert>", $OverviewTable2 | Set-Content $exportHTML
+(Get-Content $exportHTML) -replace "<insert>Privileged and Non-privileged Overview Table 2</insert>", $OverviewTable2 | Set-Content $exportHTML
 
 ### Hardcoded Credentials Overview ###
  #WebSphere
@@ -381,45 +381,49 @@ $OverView3 | Add-Member -NotePropertyName "Ansible Playbooks" -NotePropertyValue
 
 $OverViewTable3 = $OverView3 | ConvertTo-Html -Fragment -As List
 
-(Get-Content $exportHTML) -replace "<insert>Overview Table 3</insert>", $OverviewTable3 | Set-Content $exportHTML
+(Get-Content $exportHTML) -replace "<insert>Hardcoded Credentials Overview Table 3</insert>", $OverviewTable3 | Set-Content $exportHTML
 
 ### Overall Account Health ###
 
-$WinCompliantQuery = 'SELECT COUNT(DISTINCT "Account Name") FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")'
+## Compliant accounts
+
+# Compliant domain privileged accounts
+$WinCompliantQuery = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account") AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")'
 $result = Get-SQLite -Query $WinCompliantQuery -File $sqldb
 $WindowsCompliant = $result.tables.rows[0]
 
-$WinCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")) a'
+# Compliant local privileged accounts
+$WinCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(LOWER("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account") AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")) a'
 $result = Get-SQLite -Query $WinCompliantQuery2 -File $sqldb
 $WindowsCompliant += $result.tables.rows[0]
 
 (Get-Content $exportHTML) -replace "<insert>WindowsCompliant</insert>", $WindowsCompliant | Set-Content $exportHTML
 
-$WinNonCompliantQuery = 'SELECT COUNT(DISTINCT "Account Name") FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND "Compliance Status" LIKE "Non-Compliant%"'
+$WinNonCompliantQuery = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM WindowsScan WHERE "Account Type" LIKE "Domain%" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account") AND ("Compliance Status" LIKE "Non-Compliant%")'
 $result = Get-SQLite -Query $WinNonCompliantQuery -File $sqldb
 $WindowsNonCompliant = $result.tables.rows[0]
 
-$WinNonCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND "Compliance Status" LIKE "Non-Compliant%") a'
+$WinNonCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(LOWER("Machine Name"||"Account Name")) AS expr1 FROM WindowsScan WHERE "Account Type"="Local" AND ("Account Category" LIKE "Privileged%" OR "Account Category"="Service Account") AND ("Compliance Status" LIKE "Non-Compliant%")) a'
 $result = Get-SQLite -Query $WinNonCompliantQuery2 -File $sqldb
 $WindowsNonCompliant += $result.tables.rows[0]
 
 (Get-Content $exportHTML) -replace "<insert>WindowsNonCompliant</insert>", $WindowsNonCompliant | Set-Content $exportHTML
 
-$UnixNonCompliantQuery = 'SELECT COUNT(DISTINCT "Account Name") FROM UnixScan WHERE "Account Type" LIKE "Domain%" AND "Compliance Status" LIKE "Non-Compliant%"'
+$UnixNonCompliantQuery = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM UnixScan WHERE "Account Category"="Privileged Domain" AND "Compliance Status" LIKE "Non-Compliant%"'
 $result = Get-SQLite -Query $UnixNonCompliantQuery -File $sqldb
 $UnixNonCompliant = $result.tables.rows[0]
 
-$UnixNonCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM UnixScan WHERE "Account Type"="Local" AND "Compliance Status" LIKE "Non-Compliant%") a'
+$UnixNonCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE ("Account Category"="Privileged Local") AND ("Compliance Status" LIKE "Non-Compliant%")) a'
 $result = Get-SQLite -Query $UnixNonCompliantQuery2 -File $sqldb
 $UnixNonCompliant += $result.tables.rows[0]
 
 (Get-Content $exportHTML) -replace "<insert>UnixNonCompliant</insert>", $UnixNonCompliant | Set-Content $exportHTML
 
-$UnixCompliantQuery = 'SELECT COUNT(DISTINCT "Account Name") FROM UnixScan WHERE "Account Type" LIKE "Domain%" AND "Compliance Status" LIKE "Compliant%"'
+$UnixCompliantQuery = 'SELECT COUNT(DISTINCT LOWER("Account Name")) FROM UnixScan WHERE "Account Category"="Privileged Domain" AND ("Compliance Status" LIKE "Compliant%" OR "Compliance Status"="N/A")'
 $result = Get-SQLite -Query $UnixCompliantQuery -File $sqldb
 $UnixCompliant = $result.tables.rows[0]
 
-$UnixCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT(("Machine Name"||"Account Name")) AS expr1 FROM UnixScan WHERE "Account Type"="Local" AND "Compliance Status" LIKE "Compliant%") a'
+$UnixCompliantQuery2 = 'SELECT COUNT(*) FROM (SELECT DISTINCT LOWER("Machine Name"||"Account Name") AS expr1 FROM UnixScan WHERE ("Account Category"="Privileged Local") AND ("Compliance Status" LIKE "Compliant%")) a'
 $result = Get-SQLite -Query $UnixCompliantQuery2 -File $sqldb
 $UnixCompliant += $result.tables.rows[0]
 
